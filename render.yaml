@@ -4,8 +4,10 @@ services:
     name: gigy-backend
     env: node
     region: singapore
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    rootDir: backend
     envVars:
       - key: NODE_ENV
         value: production
@@ -19,6 +21,7 @@ services:
         sync: false # Set this in the dashboard
       - key: CLOUDINARY_API_SECRET
         sync: false # Set this in the dashboard
+    healthCheckPath: /api/health
     autoDeploy: true
 
   # Frontend React app
