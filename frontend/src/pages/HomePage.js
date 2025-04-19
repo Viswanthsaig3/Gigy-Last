@@ -266,7 +266,7 @@ const HomePage = () => {
             className="opportunities-image"
             ref={opportunitiesImageRef}
           >
-            <img src="/images/opportunities.png" alt="Find Opportunities" />
+            <img src="/images/oppurtunities.png" alt="Find Opportunities" />
           </div>
         </div>
       </section>
