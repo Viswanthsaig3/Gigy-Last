@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBriefcase, FaSearch, FaCheckCircle, FaArrowRight, FaHandshake } from 'react-icons/fa';
+import { FaRocket, FaShieldAlt, FaStar, FaChartLine, FaHeadset } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import './HomePage.css';
 
@@ -278,22 +279,34 @@ const HomePage = () => {
             <h2 className="section-title">Why Choose GiGy</h2>
             <p className="section-subtitle">Our platform offers unique advantages for both clients and freelancers</p>
           </div>
-        </div>
         
-        <div className="benefits-grid">
-          {benefits.map((benefit, index) => (
-            <div 
-              key={index}
-              className="benefit-card"
-              ref={el => benefitCardsRef.current[index] = el}
-            >
-              <div className="benefit-icon">
-                <benefit.icon />
-              </div>
-              <h3>{benefit.title}</h3>
-              <p>{benefit.description}</p>
-            </div>
-          ))}
+          <div className="benefits-grid">
+            {benefits.map((benefit, index) => (
+              <motion.div 
+                key={index}
+                className="benefit-card"
+                ref={el => benefitCardsRef.current[index] = el}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: index * 0.1,
+                  ease: "easeOut" 
+                }}
+                whileHover={{
+                  y: -8,
+                  boxShadow: "0 20px 30px rgba(0, 0, 0, 0.1)",
+                  transition: { duration: 0.2 }
+                }}
+              >
+                <div className={`benefit-icon-container benefit-color-${index % 3}`}>
+                  <benefit.icon className="benefit-icon" />
+                </div>
+                <h3>{benefit.title}</h3>
+                <p>{benefit.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -318,34 +331,34 @@ const HomePage = () => {
 // Benefits data
 const benefits = [
   {
-    icon: () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" /></svg>,
-    title: "Community Verified",
-    description: "Connect with trusted, reviewed professionals in our secure community network."
+    icon: FaRocket,
+    title: "Quick Matching",
+    description: "Find the perfect freelancer or job within minutes using our advanced matching algorithm."
   },
   {
-    icon: () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" /></svg>,
-    title: "Fast Responses",
-    description: "Get quick replies from freelancers, enabling you to complete your projects on time."
-  },
-  {
-    icon: () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" /><path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clipRule="evenodd" /></svg>,
-    title: "No Hidden Fees",
-    description: "Our transparent pricing means no surprise charges or hidden costs."
-  },
-  {
-    icon: () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fillRule="evenodd" d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 00.374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08zm3.094 8.016a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" /></svg>,
+    icon: FaShieldAlt,
     title: "Secure Payments",
-    description: "Your transactions are protected with our secure payment processing system."
+    description: "Our escrow system ensures secure transactions and payments are released only when you're satisfied."
   },
   {
-    icon: () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" /><path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" /></svg>,
-    title: "Real-time Chat",
-    description: "Communicate directly with clients or freelancers through our built-in messaging system."
+    icon: FaStar,
+    title: "Verified Talent",
+    description: "Work with pre-vetted professionals who have proven their expertise and reliability."
   },
   {
-    icon: () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z" /><path d="M3.265 10.602l7.668 4.129a2.25 2.25 0 002.134 0l7.668-4.13 1.37.739a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.71 0l-9.75-5.25a.75.75 0 010-1.32l1.37-.738z" /><path d="M10.933 19.231l-7.668-4.13-1.37.739a.75.75 0 000 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 000-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 01-2.134-.001z" /></svg>,
-    title: "Flexible Work",
-    description: "Find short-term gigs or long-term projects that fit your schedule and preferences."
+    icon: FaChartLine,
+    title: "Grow Your Business",
+    description: "Access tools and resources to help you expand your client base and increase your earnings."
+  },
+  {
+    icon: FaHandshake,
+    title: "Direct Communication",
+    description: "Our platform enables clear, direct communication between clients and freelancers."
+  },
+  {
+    icon: FaHeadset,
+    title: "24/7 Support",
+    description: "Get assistance whenever you need it with our dedicated customer support team."
   }
 ];
 
