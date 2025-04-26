@@ -31,12 +31,13 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1) {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
         callback(null, true);
       } else {
-        callback(null, true); // Allow all origins for socket.io for now
+        console.log(`Socket.io - Origin ${origin} not allowed by CORS`);
+        // For production, we'll still allow connections for now
+        callback(null, true);
       }
     },
     methods: ["GET", "POST"],
@@ -47,18 +48,28 @@ const io = socketIo(server, {
 // Middleware
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
+    // In production, we should check origin more carefully
     if (!origin) return callback(null, true);
+    
+    console.log(`Request from origin: ${origin}`);
+    
+    // For production, allow any origin for now to debug the specific issue
+    callback(null, true);
+    
+    // Once you identify all necessary origins, switch to this code:
+    /*
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      // For development purposes, you can log the origin that was rejected
-      console.log(`Origin ${origin} not allowed by CORS`);
-      callback(null, true); // Allow all origins for now
+      console.log(`Express - Origin ${origin} rejected by CORS`);
+      callback(new Error('Not allowed by CORS'));
     }
+    */
   },
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  exposedHeaders: ["Content-Range", "X-Content-Range"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -28,7 +28,7 @@ services:
   - type: web
     name: gigy-frontend
     env: static
-    buildCommand: cd frontend && npm install && REACT_APP_API_URL=https://gigy-backend.onrender.com npm run build
+    buildCommand: cd frontend && npm install && REACT_APP_API_URL=https://gigy-backend.onrender.com REACT_APP_SOCKET_URL=https://gigy-backend.onrender.com npm run build
     staticPublishPath: frontend/build
     autoDeploy: true
     routes:

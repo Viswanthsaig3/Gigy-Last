@@ -14,7 +14,12 @@ export const SocketProvider = ({ children }) => {
     let newSocket;
 
     if (userInfo && userInfo.token) {
-      newSocket = io(process.env.REACT_APP_SOCKET_URL, {
+      // Use SOCKET_URL if available, otherwise fall back to API_URL
+      const socketUrl = process.env.REACT_APP_SOCKET_URL || process.env.REACT_APP_API_URL;
+      
+      console.log('Connecting to socket server at:', socketUrl);
+      
+      newSocket = io(socketUrl, {
         auth: {
           token: userInfo.token,
         },
