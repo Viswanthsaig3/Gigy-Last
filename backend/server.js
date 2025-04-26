@@ -20,7 +20,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000","https://gigy.in",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"]
   }
 });
@@ -29,7 +29,11 @@ const io = socketIo(server, {
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://gigy-last-1.onrender.com"
+    "https://gigy-last-1.onrender.com",
+    "http://gigy.in",
+    "https://gigy.in",
+    "http://www.gigy.in",
+    "https://www.gigy.in"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
