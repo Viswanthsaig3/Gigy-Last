@@ -16,18 +16,47 @@ const chatRoutes = require('./routes/chatRoutes');
 // Import socket.io handler
 const socketHandler = require('./utils/socketHandler');
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://gigy-last-1.onrender.com",
+  "http://gigy.in",
+  "https://gigy.in",
+  "http://www.gigy.in", 
+  "https://www.gigy.in"
+];
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(null, true); // Allow all origins for socket.io for now
+      }
+    },
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
 // Middleware
 app.use(cors({
-  origin: "*",
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      // For development purposes, you can log the origin that was rejected
+      console.log(`Origin ${origin} not allowed by CORS`);
+      callback(null, true); // Allow all origins for now
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
