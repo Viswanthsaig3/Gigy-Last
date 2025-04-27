@@ -24,7 +24,7 @@ const ApplicationsPage = () => {
           },
         };
         
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/gigs/${gigId}`, config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/gigs/${gigId}`, config);
         
         // Check if the user is the creator of the gig
         if (data.creator._id !== userInfo._id) {
@@ -47,7 +47,7 @@ const ApplicationsPage = () => {
         };
         
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/applications/gig/${gigId}`,
+          `${process.env.REACT_APP_API_URL}/api/applications/gig/${gigId}`,
           config
         );
         
@@ -79,7 +79,7 @@ const ApplicationsPage = () => {
         };
         
         await axios.put(
-          `${process.env.REACT_APP_API_URL}/applications/${applicationId}/accept`,
+          `${process.env.REACT_APP_API_URL}/api/applications/${applicationId}/accept`,
           {},
           config
         );
@@ -104,7 +104,7 @@ const ApplicationsPage = () => {
         };
         
         await axios.put(
-          `${process.env.REACT_APP_API_URL}/applications/${applicationId}/reject`,
+          `${process.env.REACT_APP_API_URL}/api/applications/${applicationId}/reject`,
           {},
           config
         );

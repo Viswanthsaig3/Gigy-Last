@@ -31,7 +31,7 @@ const EditGigPage = () => {
           },
         };
         
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/gigs/${id}`, config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/gigs/${id}`, config);
         
         // Check if the user is the creator of the gig
         if (data.creator._id !== userInfo._id) {
@@ -95,7 +95,7 @@ const EditGigPage = () => {
         },
       };
       
-      await axios.put(`${process.env.REACT_APP_API_URL}/gigs/${id}`, formData, config);
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/gigs/${id}`, formData, config);
       
       navigate(`/gigs/${id}`);
     } catch (err) {

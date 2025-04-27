@@ -32,7 +32,7 @@ const ChatPage = () => {
         };
         
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/chats/messages/${userId}`,
+          `${process.env.REACT_APP_API_URL}/api/chats/messages/${userId}`,
           config
         );
         
@@ -44,7 +44,7 @@ const ChatPage = () => {
     
     const fetchOtherUser = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/users/${userId}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`);
         setOtherUser(data);
         setLoading(false);
       } catch (err) {

@@ -21,7 +21,7 @@ const MyApplicationsPage = () => {
         };
         
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/applications/myapplications`,
+          `${process.env.REACT_APP_API_URL}/api/applications/myapplications`,
           config
         );
         

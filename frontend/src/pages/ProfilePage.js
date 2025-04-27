@@ -40,7 +40,7 @@ const ProfilePage = () => {
           };
 
           const { data } = await axios.get(
-            `${process.env.REACT_APP_API_URL}/reviews/user/${userInfo._id}`,
+            `${process.env.REACT_APP_API_URL}/api/reviews/user/${userInfo._id}`,
             config
           );
 

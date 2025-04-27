@@ -57,7 +57,7 @@ const CreateGigPage = () => {
         },
       };
       
-      await axios.post(`${process.env.REACT_APP_API_URL}/gigs`, formData, config);
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/gigs`, formData, config);
       
       navigate('/my-gigs');
     } catch (err) {

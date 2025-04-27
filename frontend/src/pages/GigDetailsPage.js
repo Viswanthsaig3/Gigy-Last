@@ -23,7 +23,7 @@ const GigDetailsPage = () => {
   useEffect(() => {
     const fetchGig = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/gigs/${id}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/gigs/${id}`);
         setGig(data);
         setLoading(false);
       } catch (err) {
@@ -34,7 +34,7 @@ const GigDetailsPage = () => {
     
     const fetchReviews = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/reviews/gig/${id}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/reviews/gig/${id}`);
         setReviews(data);
       } catch (err) {
         console.error('Failed to fetch reviews:', err);
@@ -72,7 +72,7 @@ const GigDetailsPage = () => {
       };
       
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/applications`,
+        `${process.env.REACT_APP_API_URL}/api/applications`,
         { 
           gigId: id, 
           coverLetter, 
@@ -225,7 +225,7 @@ const GigDetailsPage = () => {
                       },
                     };
                     await axios.put(
-                      `${process.env.REACT_APP_API_URL}/gigs/${gig._id}/complete`,
+                      `${process.env.REACT_APP_API_URL}/api/gigs/${gig._id}/complete`,
                       {},
                       config
                     );

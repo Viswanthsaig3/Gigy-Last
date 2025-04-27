@@ -51,7 +51,7 @@ const MyGigsPage = () => {
           },
         };
         
-        await axios.delete(`${process.env.REACT_APP_API_URL}/gigs/${gigId}`, config);
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/gigs/${gigId}`, config);
         
         setGigs(gigs.filter(gig => gig._id !== gigId));
       } catch (err) {
@@ -173,7 +173,7 @@ const MyGigsPage = () => {
                           };
                           
                           await axios.put(
-                            `${process.env.REACT_APP_API_URL}/gigs/${gig._id}/complete`,
+                            `${process.env.REACT_APP_API_URL}/api/gigs/${gig._id}/complete`,
                             {},
                             config
                           );

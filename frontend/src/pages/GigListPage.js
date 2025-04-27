@@ -18,7 +18,7 @@ const GigListPage = () => {
   useEffect(() => {
     const fetchGigs = async () => {
       try {
-        let url = `${process.env.REACT_APP_API_URL}/gigs?status=${status}`;
+        let url = `${process.env.REACT_APP_API_URL}/api/gigs?status=${status}`;
         
         if (category) {
           url += `&category=${category}`;

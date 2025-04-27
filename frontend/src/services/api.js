@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-// Create an Axios instance
+// Create an Axios instance with /api prefix included in baseURL
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api`,  // Add /api prefix here
 });
 
 // Request interceptor for adding auth token

@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
       };
       
       const { data } = await axios.put(
-        `${process.env.REACT_APP_API_URL}/users/profile`,
+        `${process.env.REACT_APP_API_URL}/api/users/profile`,
         userData,
         config
       );
@@ -118,7 +118,7 @@ export const AuthProvider = ({ children }) => {
       };
       
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/profile/picture`,
+        `${process.env.REACT_APP_API_URL}/api/users/profile/picture`,
         formData,
         config
       );
