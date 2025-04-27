@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import './MyApplicationsPage.css';
 
@@ -14,16 +15,7 @@ const MyApplicationsPage = () => {
   useEffect(() => {
     const fetchMyApplications = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/applications/myapplications`,
-          config
-        );
+        const { data } = await api.get('/applications/myapplications');
         
         setApplications(data);
         setLoading(false);
@@ -36,7 +28,7 @@ const MyApplicationsPage = () => {
     if (userInfo) {
       fetchMyApplications();
     }
-  }, [userInfo]);
+  }, [userInfo, filter]);
 
   const filteredApplications = filter === 'all' 
     ? applications 

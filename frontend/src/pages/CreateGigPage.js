@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import api from '../services/api';
 import './CreateGigPage.css';
 
 const CreateGigPage = () => {
@@ -50,14 +51,14 @@ const CreateGigPage = () => {
         }
       }
       
+      // For file uploads, we need to use the special config
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/gigs`, formData, config);
+      await api.post('/gigs', formData, config);
       
       navigate('/my-gigs');
     } catch (err) {

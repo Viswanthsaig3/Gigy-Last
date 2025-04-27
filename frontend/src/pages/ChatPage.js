@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { SocketContext } from '../context/SocketContext';
 import './ChatPage.css';
@@ -25,16 +25,7 @@ const ChatPage = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/chats/messages/${userId}`,
-          config
-        );
+        const { data } = await api.get(`/chats/messages/${userId}`);
         
         setMessages(data);
       } catch (err) {
@@ -44,7 +35,7 @@ const ChatPage = () => {
     
     const fetchOtherUser = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`);
+        const { data } = await api.get(`/users/${userId}`);
         setOtherUser(data);
         setLoading(false);
       } catch (err) {

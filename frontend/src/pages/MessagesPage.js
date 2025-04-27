@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { SocketContext } from '../context/SocketContext';
 import './MessagesPage.css';
@@ -35,21 +36,12 @@ const MessagesPage = () => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/chats/conversations`,
-          config
-        );
+        const { data } = await api.get('/chats/conversations');
         
         setConversations(data);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch conversations. Please try again.');
+        setError('Failed to fetch messages. Please try again.');
         setLoading(false);
       }
     };

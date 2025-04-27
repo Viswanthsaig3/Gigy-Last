@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
+import api from '../services/api';
 import './EditGigPage.css';
 
 const EditGigPage = () => {
@@ -25,13 +26,7 @@ const EditGigPage = () => {
   useEffect(() => {
     const fetchGig = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/gigs/${id}`, config);
+        const { data } = await api.get(`/gigs/${id}`);
         
         // Check if the user is the creator of the gig
         if (data.creator._id !== userInfo._id) {
@@ -88,16 +83,16 @@ const EditGigPage = () => {
         }
       }
       
+      // For file uploads, we need to use the special config
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       
-      await axios.put(`${process.env.REACT_APP_API_URL}/api/gigs/${id}`, formData, config);
+      await api.put(`/gigs/${id}`, formData, config);
       
-      navigate(`/gigs/${id}`);
+      navigate('/my-gigs');
     } catch (err) {
       setError(
         err.response && err.response.data.message

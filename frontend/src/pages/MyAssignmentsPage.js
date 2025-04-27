@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import './MyAssignmentsPage.css';
 
@@ -14,16 +15,7 @@ const MyAssignmentsPage = () => {
   useEffect(() => {
     const fetchMyAssignments = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/gigs/user/myassignments`,
-          config
-        );
+        const { data } = await api.get('/gigs/user/myassignments');
         
         setAssignments(data);
         setLoading(false);
@@ -36,7 +28,7 @@ const MyAssignmentsPage = () => {
     if (userInfo) {
       fetchMyAssignments();
     }
-  }, [userInfo]);
+  }, [userInfo, filter]);
 
   const filteredAssignments = filter === 'all' 
     ? assignments 

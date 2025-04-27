@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import api from '../services/api';
 import axios from 'axios';
 
 export const AuthContext = createContext();
@@ -21,8 +22,9 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/users/login`,
+      // Use the configured api instance which already includes the /api prefix
+      const { data } = await api.post(
+        '/users/login',
         { email, password }
       );
       
@@ -46,9 +48,9 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     
     try {
-      // Fixed path, but getting connection error
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/users`,
+      // Use the configured api instance here too
+      const { data } = await api.post(
+        '/users',
         { name, email, password }
       );
       
@@ -77,17 +79,10 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      
-      const { data } = await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/users/profile`,
-        userData,
-        config
+      // Use the configured api instance 
+      const { data } = await api.put(
+        '/users/profile',
+        userData
       );
       
       setUserInfo({ ...userInfo, ...data });
@@ -110,15 +105,15 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     
     try {
+      // Use the configured api instance with custom headers for file upload
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/users/profile/picture`,
+      const { data } = await api.post(
+        '/users/profile/picture',
         formData,
         config
       );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import './ApplicationsPage.css';
 
@@ -18,21 +19,15 @@ const ApplicationsPage = () => {
   useEffect(() => {
     const fetchGig = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
+        const { data } = await api.get(`/gigs/${gigId}`);
         
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/gigs/${gigId}`, config);
-        
+        setGig(data);
         // Check if the user is the creator of the gig
         if (data.creator._id !== userInfo._id) {
           navigate('/my-gigs');
           return;
         }
         
-        setGig(data);
       } catch (err) {
         setError('Failed to fetch gig details. Please try again.');
       }
@@ -40,16 +35,7 @@ const ApplicationsPage = () => {
     
     const fetchApplications = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/applications/gig/${gigId}`,
-          config
-        );
+        const { data } = await api.get(`/applications/gig/${gigId}`);
         
         setApplications(data);
         setLoading(false);
@@ -72,17 +58,7 @@ const ApplicationsPage = () => {
   const handleAccept = async (applicationId) => {
     if (window.confirm('Are you sure you want to accept this application?')) {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        await axios.put(
-          `${process.env.REACT_APP_API_URL}/api/applications/${applicationId}/accept`,
-          {},
-          config
-        );
+        await api.put(`/applications/${applicationId}/accept`);
         
         // Update local state
         navigate(`/gigs/${gigId}`);
@@ -97,17 +73,7 @@ const ApplicationsPage = () => {
   const handleReject = async (applicationId) => {
     if (window.confirm('Are you sure you want to reject this application?')) {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        
-        await axios.put(
-          `${process.env.REACT_APP_API_URL}/api/applications/${applicationId}/reject`,
-          {},
-          config
-        );
+        await api.put(`/applications/${applicationId}/reject`);
         
         // Update local state
         setApplications(applications.map(app => 

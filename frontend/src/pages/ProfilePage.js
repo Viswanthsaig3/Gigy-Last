@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import api from '../services/api';
 import '../components/layout/Header.css';
 import './ProfilePage.css';
 
@@ -33,16 +34,7 @@ const ProfilePage = () => {
       const fetchUserReviews = async () => {
         setReviewsLoading(true);
         try {
-          const config = {
-            headers: {
-              Authorization: `Bearer ${userInfo.token}`,
-            },
-          };
-
-          const { data } = await axios.get(
-            `${process.env.REACT_APP_API_URL}/api/reviews/user/${userInfo._id}`,
-            config
-          );
+          const { data } = await api.get(`/reviews/user/${userInfo._id}`);
 
           setUserReviews(data);
         } catch (err) {

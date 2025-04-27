@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import './GigDetailsPage.css';
 
@@ -23,7 +24,7 @@ const GigDetailsPage = () => {
   useEffect(() => {
     const fetchGig = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/gigs/${id}`);
+        const { data } = await api.get(`/gigs/${id}`);
         setGig(data);
         setLoading(false);
       } catch (err) {
@@ -34,7 +35,7 @@ const GigDetailsPage = () => {
     
     const fetchReviews = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/reviews/gig/${id}`);
+        const { data } = await api.get(`/reviews/gig/${id}`);
         setReviews(data);
       } catch (err) {
         console.error('Failed to fetch reviews:', err);
@@ -64,21 +65,13 @@ const GigDetailsPage = () => {
     setIsSubmitting(true);
     
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/applications`,
+      await api.post(
+        '/applications',
         { 
           gigId: id, 
           coverLetter, 
           proposedAmount: parseFloat(proposedAmount) 
-        },
-        config
+        }
       );
       
       setApplySuccess('Application submitted successfully!');
