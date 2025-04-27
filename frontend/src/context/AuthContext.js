@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/login`,
+        `${process.env.REACT_APP_API_URL}/api/users/login`,
         { email, password }
       );
       
@@ -46,8 +46,9 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     
     try {
+      // Fixed path, but getting connection error
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/users`, // Added /api prefix here
+        `${process.env.REACT_APP_API_URL}/api/users`,
         { name, email, password }
       );
       
